@@ -14,21 +14,31 @@ const environments = [
     { account: '249937418483', region: 'ap-northeast-1' , cidr: '10.12.0.0/16'}
 ]
 
-const VPCPeeringStack = new OnPremSimVPCPeeringStack(app, `OnPremSimVPCPeeringStack-${environments[0].region}`, {
-    env: { account: environments[0].account, region: environments[0].region},
-    fromRegion: environments[0].region,
-    toRegion: environments[1].region
- });
  
 // Instantiate one VPC stack per region
 
+const envCount = environments.length;
+let envIndex = 0;
+
+console.log(envCount); // debug
+
 for (const env of environments) {
+    console.log(envIndex);
+    
     const VPCStackRegion = new OnPremSimVPCStack(app, `OnPremSimVPCStack-${env.region}`, {
     env: { account: env.account, region: env.region},
     vpcCidr: env.cidr
     });
+    if ( (envIndex+1) < envCount) {
+        const VPCPeeringStack = new OnPremSimVPCPeeringStack(app, `OnPremSimVPCPeeringStack-${env.region}`, {
+            env: { account: env.account, region: env.region},
+            fromRegion: environments[envIndex].region,
+            toRegion: environments[envIndex+1].region
+        });
+        VPCPeeringStack.addDependency(VPCStackRegion);
+    };
     
-    VPCPeeringStack.addDependency(VPCStackRegion);
+    envIndex++;
 }
 
 
