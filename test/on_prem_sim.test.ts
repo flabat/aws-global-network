@@ -5,7 +5,7 @@ import * as OnPremSim from '../lib/on_prem_sim-stack';
 test('Empty Stack', () => {
     const app = new cdk.App();
     // WHEN
-    const stack = new OnPremSim.OnPremSimStack(app, 'MyTestStack');
+    const stack = new OnPremSim.OnPremSimVPCStack(app, 'MyTestStack', {});
     // THEN
     expectCDK(stack).to(matchTemplate({
       "Resources": {}
