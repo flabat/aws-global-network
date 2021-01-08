@@ -13,5 +13,25 @@
     "ap-northeast-1a",
     "ap-northeast-1c",
     "ap-northeast-1d"
+  ],
+  "availability-zones:account=249937418483:region=eu-central-1": [
+    "eu-central-1a",
+    "eu-central-1b",
+    "eu-central-1c"
+  ],
+  "availability-zones:account=249937418483:region=sa-east-1": [
+    "sa-east-1a",
+    "sa-east-1b",
+    "sa-east-1c"
+  ],
+  "availability-zones:account=249937418483:region=me-south-1": [
+    "me-south-1a",
+    "me-south-1b",
+    "me-south-1c"
+  ],
+  "availability-zones:account=249937418483:region=af-south-1": [
+    "af-south-1a",
+    "af-south-1b",
+    "af-south-1c"
   ]
 }

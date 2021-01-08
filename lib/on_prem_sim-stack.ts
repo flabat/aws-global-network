@@ -4,8 +4,11 @@ import * as ssm from '@aws-cdk/aws-ssm';
 import { env } from 'process';
 import { Environment } from '@aws-cdk/core';
 import { SSMParameterReader } from './ssm-parameter-reader';
+import { Vpc } from '@aws-cdk/aws-ec2';
+import { StringParameter } from '@aws-cdk/aws-ssm';
 
 export const ON_PREM_VPC_PARAMETER = 'ONPREM_VPC_PARAMETER';
+export const ON_PREM_PCX_PARAMETER = 'ONPREM_PCX_PARAMETER';
 
 interface OnPremSimProps extends cdk.StackProps {
   vpcCidr?: string;
@@ -15,8 +18,13 @@ export interface OnPremSimVpcPeeringProps extends OnPremSimProps {
   fromRegion: string;
   toRegion: string
 }
-export class OnPremSimVPCStack extends cdk.Stack {
 
+export interface OnpremSIMRouteProps extends cdk.StackProps {
+  fromRegion:string
+}
+
+
+export class OnPremSimVPCStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props: OnPremSimProps) {
     super(scope, id, props);
 
@@ -56,6 +64,31 @@ export class OnPremSimVPCPeeringStack extends cdk.Stack {
       vpcId: VPCid,
       peerVpcId: PeerVPCid,
       peerRegion: props.toRegion
-    })
+    });
+
+    const pcxssm = new ssm.StringParameter(this, 'OnPremPCXParameter', {
+      parameterName: ON_PREM_VPC_PARAMETER + props.fromRegion + "_" + props.toRegion ,
+      description: 'The PCX Id created by the OnPremSim Deployment',
+      stringValue: vpcPeering.ref
+    });
+
   }
+}
+
+export class OnPremSimVPCAddRouteStack extends cdk.Stack {
+  constructor(scope: cdk.Construct, id: string, props: OnpremSIMRouteProps) {
+    super(scope, id, props);
+    
+    // const VPCIdReader = new SSMParameterReader(this, 'VPCIdReader', {
+    //   parameterName: ON_PREM_VPC_PARAMETER,
+    //   region: props.fromRegion
+    // });
+    // const localVPCid: string = VPCIdReader.getParameterValue();
+    const localVPCId = StringParameter.valueForStringParameter(
+      this, 'ONPREM_VPC_PARAMETER');
+    // const vpc = Vpc.fromLookup(this, 'OnPremVPC', { vpcId: localVPCId });
+    console.log(localVPCId);
+
+  }
+
 }
