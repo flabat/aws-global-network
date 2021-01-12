@@ -6,7 +6,8 @@ import { env } from 'process';
 
 const app = new cdk.App();
 
-const account = '249937418483';
+// const account = '999999999999';
+const account = process.env.CDK_DEFAULT_ACCOUNT;
 
 // Declare region properties
 const environments = [
