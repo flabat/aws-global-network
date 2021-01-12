@@ -10,7 +10,7 @@ const account = '249937418483';
 
 // Declare region properties
 const environments = [
-    { account: account, region: 'af-south-1' , cidr: '10.2.0.0/16'},
+    //{ account: account, region: 'af-south-1' , cidr: '10.2.0.0/16'},
     // { account: account, region: 'ap-east-1' , cidr: '10.4.0.0/16'},
     // { account: account, region: 'ap-northeast-1' , cidr: '10.8.0.0/16'},
     // { account: account, region: 'ap-northeast-2' , cidr: '10.12.0.0/16'},
@@ -23,10 +23,10 @@ const environments = [
     // { account: account, region: 'eu-north-1' , cidr: '10.28.0.0/16'},
     // { account: account, region: 'eu-south-1' , cidr: '10.30.0.0/16'},
     // { account: account, region: 'eu-west-1' , cidr: '10.32.0.0/16'},
-    { account: account, region: 'eu-west-2' , cidr: '10.34.0.0/16'},
+    //{ account: account, region: 'eu-west-2' , cidr: '10.34.0.0/16'},
     // { account: account, region: 'eu-west-3' , cidr: '10.36.0.0/16'},
     // { account: account, region: 'me-south-1' , cidr: '10.38.0.0/16'},
-    { account: account, region: 'sa-east-1' , cidr: '10.40.0.0/16'},
+    //{ account: account, region: 'sa-east-1' , cidr: '10.40.0.0/16'},
     // { account: account, region: 'us-east-1' , cidr: '10.42.0.0/16'},
     { account: account, region: 'us-east-2' , cidr: '10.44.0.0/16'},
     //{ account: account, region: 'us-west-1' , cidr: '10.46.0.0/16'},
@@ -57,8 +57,6 @@ for (const env of environments) {
                 toRegion: environments[envIndex+1+i].region
             });
             VPCPeeringStack.addDependency(VPCStackRegion);
-            addRoutes.addDependency(VPCPeeringStack);
-            addRoutes.addDependency(VPCStackRegion); 
         };
         
     };
